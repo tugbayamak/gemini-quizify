@@ -6,6 +6,7 @@ from langchain_google_vertexai import VertexAIEmbeddings
 # Load environment variables from .env file
 load_dotenv()
 
+
 class EmbeddingClient:
     """
     Task: Initialize the EmbeddingClient class to connect to Google Cloud's VertexAI for text embeddings.
@@ -32,7 +33,7 @@ class EmbeddingClient:
 
     Note: The 'embed_query' method has been provided for you. Focus on correctly initializing the class.
     """
-    
+
     def __init__(self, model_name, project, location):
         """
         Initialize the embedding client with a specific model, project, and location for Google VertexAI.
@@ -42,6 +43,7 @@ class EmbeddingClient:
             project=project,
             location=location
         )
+
     def embed_query(self, query):
         """
         Uses the embedding client to retrieve embeddings for the given query.
@@ -55,7 +57,7 @@ class EmbeddingClient:
         except Exception as e:
             print(f"An error occurred while embedding the query: {e}")
             return None
-    
+
     def embed_documents(self, documents):
         """
         Retrieve embeddings for multiple documents.
@@ -69,16 +71,17 @@ class EmbeddingClient:
             print("Method embed_documents not defined for the client.")
             return None
 
+
 if __name__ == "__main__":
     model_name = os.getenv('MODEL_NAME'),
     project = os.getenv('GOOGLE_PROJECT_ID')
     location = os.getenv('LOCATION')
 
     embedding_client = EmbeddingClient(model_name, project, location)
-    
+
     st.title('Text Embedding Display')
     query = st.text_input("Enter text to embed:", "Hello World!")
-    
+
     if st.button("Get Embedding"):
         vectors = embedding_client.embed_query(query)
         if vectors:
