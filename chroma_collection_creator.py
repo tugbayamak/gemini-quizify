@@ -21,8 +21,8 @@ class ChromaCollectionCreator:
         :param processor: An instance of DocumentProcessor that has processed documents.
         :param embeddings_config: An embedding client for embedding documents.
         """
-        self.processor = processor      # This will hold the DocumentProcessor from Task 3
-        self.embed_model = embed_model  # This will hold the EmbeddingClient from Task 4
+        self.processor = processor      # This will hold the DocumentProcessor
+        self.embed_model = embed_model  # This will hold the EmbeddingClient
         self.db = None                  # This will hold the Chroma collection
     
     def create_chroma_collection(self):
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     processor.ingest_documents()
     
     embed_config = {
-        "model_name": "textembedding-gecko@003",
+        "model_name": os.getenv('MODEL_NAME'),
         "project": os.getenv('GOOGLE_PROJECT_ID'),
         "location": os.getenv('LOCATION')
     }

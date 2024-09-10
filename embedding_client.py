@@ -70,7 +70,7 @@ class EmbeddingClient:
             return None
 
 if __name__ == "__main__":
-    model_name = "textembedding-gecko@003"
+    model_name = os.getenv('MODEL_NAME'),
     project = os.getenv('GOOGLE_PROJECT_ID')
     location = os.getenv('LOCATION')
 
