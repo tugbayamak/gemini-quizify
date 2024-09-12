@@ -64,87 +64,12 @@ class QuizManager:
         Note: Ensure that `st.session_state["question_index"]` is initialized before calling this method. This navigation method enhances the user experience by providing fluid access to quiz questions.
         """
         current_index = st.session_state["question_index"]
-        adjusted_index = (current_index + direction) % self.total_questions
-        st.session_state["question_index"] = adjusted_index
-
-
-# Test Generating the Quiz
-if __name__ == "__main__":
-
-    if 'question_bank' not in st.session_state:
-        st.session_state.question_bank = None
-
-    embed_config = {
-        "model_name": os.getenv('MODEL_NAME'),
-        "project": os.getenv('GOOGLE_PROJECT_ID'),
-        "location": os.getenv('LOCATION')
-    }
-
-    screen = st.empty()
-    with screen.container():
-        st.header("Quiz Builder")
-        processor = DocumentProcessor()
-        processor.ingest_documents()
-
-        embed_client = EmbeddingClient(**embed_config)
-
-        chroma_creator = ChromaCollectionCreator(processor, embed_client)
-
-        question = None
-        question_bank = None
-
-        with st.form("Load Data to Chroma"):
-            st.subheader("Quiz Builder")
-            st.write(
-                "Select PDFs for Ingestion, the topic for the quiz, and click Generate!")
-
-            topic_input = st.text_input(
-                "Topic for Generative Quiz", placeholder="Enter the topic of the document")
-            questions = st.slider("Number of Questions",
-                                  min_value=1, max_value=10, value=1)
-
-            submitted = st.form_submit_button("Submit")
-            if submitted:
-                chroma_creator.create_chroma_collection()
-
-                st.write(topic_input)
-
-                # Test the Quiz Generator
-                generator = QuizGenerator(
-                    topic_input, questions, chroma_creator)
-                st.session_state.question_bank = generator.generate_quiz()
-
-    if st.session_state.question_bank:
-        screen.empty()
-        with st.container():
-            st.header("Generated Quiz Question: ")
-
-            quiz_manager = QuizManager(st.session_state.question_bank)
-            # Format the question and display
-            with st.form("Multiple Choice Question"):
-                index = 0  # Example index
-                index_question = quiz_manager.get_question_at_index(index)
-
-                # Unpack choices for radio
-                choices = []
-                # For loop unpack the data structure
-                for choice in index_question['choices']:
-                    choices.append(choice['value'])
-
-                # Display the question onto streamlit
-                st.write(f"Question: {index_question['question']}")
-
-                answer = st.radio(  # Display the radio button with the choices
-                    'Choose the correct answer',
-                    choices
-                )
-                submitted = st.form_submit_button("Submit")
-
-                if submitted:  # On click submit
-                    correct_answer_key = index_question['answer']
-                    for choice in index_question['choices']:
-                        if choice['key'] == correct_answer_key:
-                            if answer == choice['value']:
-                                st.success("Correct!")
-                            else:
-                                st.error("Incorrect!")
+        if current_index == 0 and direction == -1:
+            return
+        else:
+            adjusted_index = current_index + direction
+            if adjusted_index == self.total_questions:
+                st.session_state['display_quiz'] = False
+                st.empty()
+                st.header("End of the quiz.")
+            st.session_state["question_index"] = adjusted_index

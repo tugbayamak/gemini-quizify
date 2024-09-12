@@ -91,25 +91,3 @@ class ChromaCollectionCreator:
                 st.error("No matching documents found!", icon="🚨")
         else:
             st.error("Chroma Collection has not been created!", icon="🚨")
-
-
-if __name__ == "__main__":
-    processor = DocumentProcessor()
-    processor.ingest_documents()
-
-    embed_config = {
-        "model_name": os.getenv('MODEL_NAME'),
-        "project": os.getenv('GOOGLE_PROJECT_ID'),
-        "location": os.getenv('LOCATION')
-    }
-
-    embed_client = EmbeddingClient(**embed_config)
-
-    chroma_creator = ChromaCollectionCreator(processor, embed_client)
-
-    with st.form("Load Data to Chroma"):
-        st.write("Select PDFs for Ingestion, then click Submit")
-
-        submitted = st.form_submit_button("Submit")
-        if submitted:
-            chroma_creator.create_chroma_collection()

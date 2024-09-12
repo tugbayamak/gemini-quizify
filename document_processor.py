@@ -73,8 +73,3 @@ class DocumentProcessor:
 
             # Display the total number of pages processed.
             st.write(f"Total pages processed: {len(self.pages)}")
-
-
-if __name__ == "__main__":
-    processor = DocumentProcessor()
-    processor.ingest_documents()
