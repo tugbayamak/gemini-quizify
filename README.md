@@ -57,10 +57,10 @@ streamlit run main.py
 ```
 
 # Usage
-**Upload PDF:** Open the application and upload the PDF file from which you want to generate the quiz.
-Select Parameters: Choose the number of questions and the specific topic for the quiz.
-Generate Quiz: Click on the "Generate" button, and the program will create a quiz based on the provided inputs.
-Review and Use: Review the generated quiz questions and use them for your desired purpose.
+**Upload PDF:** Open the application and upload the PDF file from which you want to generate the quiz.  
+**Select Parameters:** Choose the number of questions and the specific topic for the quiz.  
+**Generate Quiz:** Click on the "Generate" button, and the program will create a quiz based on the provided inputs.  
+**Review and Use:** Review the generated quiz questions and use them for your desired purpose.
 
 # Acknowledgements
 This project is part of the challenges provided by Radical AI. Special thanks to all contributors who have helped implement various steps in this project.
