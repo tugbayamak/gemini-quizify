@@ -47,7 +47,7 @@ if __name__ == "__main__":
                 num_questions = st.slider(
                     "Number of Questions", min_value=1, max_value=10, value=1)
 
-                submitted = st.form_submit_button("Submit")
+                submitted = st.form_submit_button("Generate")
 
                 if submitted:
                     chroma_creator.create_chroma_collection()
